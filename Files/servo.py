@@ -29,7 +29,7 @@ s = servo(18)
 
 while True:
     # 0 is closed, 180 is open
-    user_input = input("Please enter 'z' 'x' 'c' for 0, 60, 180; or 'i' for input, or 'q' to end the program: ")
+    user_input = input("Please enter 'z' 'x' 'c' for 0, 60, 180; or 'i' for input, 'l' for loop, or 'q' to end the program: ")
     #s.move(user_input)
     if user_input == 'c':
         s.move(0)
@@ -44,6 +44,13 @@ while True:
                 break
             else:
                 s.move(int_input)
+    elif user_input == 'l':
+        print("Kill to quit")
+        while user_input != 'w':
+            s.move(0)
+            sleep(3)
+            s.move(180)
+            sleep(3)
     elif user_input == 'q':
         s.__del__()
         quit()
