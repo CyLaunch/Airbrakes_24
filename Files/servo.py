@@ -1,4 +1,4 @@
-ximport RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 from time import sleep
 freq_hz = 50
 
@@ -28,9 +28,12 @@ s = servo(18)
 #s.move(60)
 
 while True:
-    user_input = input("Please enter 'x' or 'z' or 'i' or 'q' to end the program: ")
+    # 0 is closed, 180 is open
+    user_input = input("Please enter 'z' 'x' 'c' for 0, 60, 180; or 'i' for input, or 'q' to end the program: ")
     #s.move(user_input)
-    if user_input == 'x':
+    if user_input == 'c':
+        s.move(0)
+    elif user_input == 'x':
         s.move(60)
     elif user_input == 'z':
         s.move(180)
