@@ -13,7 +13,7 @@ from helper_objects.servo import servo
 #----------------------------------------------------
 # Constants
 #----------------------------------------------------
-airbrake_deployment_angle = 
+airbrake_deployment_angle = 170
 launch_detection_magnitude = 10
 
 class airbrake:
@@ -35,3 +35,9 @@ class airbrake:
             return True
         else:
             return False
+
+    def get_altitude(self):
+        return self.barometer.get_altitude()
+
+    def get_acceleration(self):
+        return self.accelerometer.accel()
