@@ -1,11 +1,16 @@
+#----------------------------------------------------
+# Accelerometer object for the ICM20649
+# @Author Cam or Marcus?
+# CyLaunch 2023-24
+#----------------------------------------------------
+
 import time
 import board
 import adafruit_icm20x
-# Lets see if we can get this down to reading in around 0.1s
+
 class accelerometer:
 
     def __init__(self):
-
         self.i2c = board.I2C()  
         self.icm = adafruit_icm20x.ICM20649(self.i2c)
 
@@ -23,10 +28,12 @@ class accelerometer:
     def gyro(self):
         return self.icm.gyro
         
-    
+    # Returns a touple of the x, y, & z accelerations
     def accel(self):
         return self.icm.acceleration
 
+    # Returns the maginitude of the X, Y, & Z
+    # Accelerations in meters
     def accel_magnitude(self):
         data = self.accel()
         cnt = 0
