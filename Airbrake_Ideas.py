@@ -1,12 +1,6 @@
 import numpy as np
-from scipy import signal
-from gpiozero import Barometer,Accelerometer
-from signal import pause
 import time
 import math
-
-altitude = Barometer()#Pin
-accelerometer = Accelerometer()#Pin
 
 class Controllers:
     def __init__(self):
@@ -39,6 +33,8 @@ class Sensors:
 
 class Calculations:
     def current_speed(self):
+        #This reads in barometer and accelerometer and decides velocity
+        #THIS NEEDS TO CHANGE BASED ON SENSOR TIMING
         alt_s1 = Sensors.altitude()
         acc_s1 = Sensors.acceleration()
         time.sleep(0.01)
@@ -46,48 +42,49 @@ class Calculations:
         acc_s2 = Sensors.acceleration()
         altSpeed = (alt_s2-alt_s1)/0.01
         accSpeed = (acc_s2-acc_s1)*0.01
-        if accSpeed > 100: #This can change so it makes sense
-            return altSpeed
-        else:
+        if altSpeed > 100: #This can change so it makes sense just if its outside of bounds
             return accSpeed
-
-    def desired_speed(alt):
-        deltaAlt = alt - Sensors.altitude()
-        speed = math.sqrt(2(Sensors.acceleration()*deltaAlt))
-        return speed
-    
-
-class ControlLogic:
-    def launch(self):
-        #0 not launched
-        #1 is launched
-        if Sensors.acceleration() >= 15: #
-            return 1 
         else:
-            return 0
-
-    def deployment(alt): 
-        if Calc.current_speed() > Calc.desired_speed(alt):
-            Rocket.deploy()
-        
-        elif Rocket.state() == 1:
-            Rocket.retract()
-
+            return altSpeed
+    
+    def predicted_alt(alt,velocity): #Maybe read in density too?
+        m=15 #kg
+        Cd=0.43 #CHANGE HUHHH???
+        A=0.0224 #Area without airbrakes (m^2)
+        rho=1.056 #Can we read this in with barometer?
+        g=9.81 #duh m/s^2) 
+        Xc=(m/(rho*Cd*A)*log((m*g+0.5*rho*Cd*A*velocity^2)/(m*g)))+alt;
+        return Xc
 
 if __name__ == "__main__":
     Rocket = Controllers()
     Calc = Calculations()
+    Sensor = Sensors()
     DesiredAltitude = 5000
+    currSpeed = 0
 
     #Launch Phase
-    launchState = ControlLogic.launch()
-    while launchState == 0:
-        launchState = ControlLogic.launch()
+    launch_State = 0
+    while launch_State == 0:
+        #0 not launched
+        #1 is launched
+        if Sensors.acceleration() >= 15: #This doesnt really mean anything
+            launch_State = 1
+        else:
+            launch_State = 0
 
     #Motor Burn
-    time.sleep(5)
+    t_end = time.time() + 5
+    while time.time() < t_end:
+        currSpeed += Calculations.current_speed() #This just reads the data
 
     #Apogee
-    currSpeed = Calculations.current_speed()
     while currSpeed >= 0:
-        ControlLogic.deployment(DesiredAltitude)
+        currSpeed += Calculations.current_speed()
+        total_alt = Calculations.predicted_alt(Sensors.altitude(),currSpeed) #Need to read in alt 
+        if total_alt >= 1524: #This is in meters! 
+            Controllers.deploy()
+        else: #WE might need logic in here that decides if they are not out what should happen
+            Controllers.retract()
+
+    Controllers.retract()
