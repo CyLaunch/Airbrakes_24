@@ -14,6 +14,6 @@ class barometer:
         self.bmp.pressure_oversampling = 8
         self.bmp.temperature_oversampling = 2
 
-    # Returns the altitude in meters
+    # Returns the altitude in feet
     def get_altitude(self):
-        return self.bmp.altitude
+        return self.bmp.altitude*3.28084
