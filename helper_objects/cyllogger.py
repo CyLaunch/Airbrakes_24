@@ -8,14 +8,14 @@
 
 from datetime import datetime
 import os
-
+LOGS_DIR = "/home/cylaunch/logs/"
 class cyllogger:
     def __init__(self, name):
         try:
-            self.logfile = open("logs/" + name + datetime.now().strftime("--%Y-%m-%d--%H-%M-%S") + ".txt", "w")
+            self.logfile = open( LOGS_DIR + name + datetime.now().strftime("--%Y-%m-%d--%H-%M-%S") + ".txt", "w")
         except:
-            os.mkdir("logs")
-            self.logfile = open("logs/" + name + datetime.now().strftime("--%Y-%m-%d--%H-%M-%S") + ".txt", "w")
+            os.mkdir("/home/cylaunch/logs/")
+            self.logfile = open( LOGS_DIR + name + datetime.now().strftime("--%Y-%m-%d--%H-%M-%S") + ".txt", "w")
     
     def writeTo(self, message):
         now = datetime.now()

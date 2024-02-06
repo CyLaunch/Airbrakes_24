@@ -1,3 +1,8 @@
+#----------------------------------------------------
+# Barometer object featuring the BMP388
+# @Author cfergen or Marcus?
+# CyLaunch 2023-24
+#----------------------------------------------------
 import RPi.GPIO as GPIO
 from time import sleep
 freq_hz = 50
@@ -13,7 +18,7 @@ class servo:
     def move(self, angle):
         newDC = 2.5 + (angle / 18.95)
         self.p.ChangeDutyCycle(newDC)
-        sleep(1)
+        sleep(0.25)
 
     def __del__(self):
         GPIO.cleanup()
