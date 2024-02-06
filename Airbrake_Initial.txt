@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+float G = 32.15892052358924
+float Altitude = 5050
+
+void setup() {
+  // put your setup code here, to run once:
+  wait(5)
+}
+
+void deployAirbrakes() {
+  // Code to deploy the airbrakes
+}
+
+void retractAirbrakes() {
+  // Code to retract the airbrakes
+}
+
+int airbrakeState() {
+  /* if airbrake delopyed return 1
+    if airbrake retracted return 0 */
+  return state
+}
+
+float calculateAltitude(){
+  // Altimiter Data
+  return Alt
+}
+
+float calculateCurrentSpeed(){
+  // Pressure Differences or read in values 
+  return speed
+}
+
+float calculateAcceleration(/*float speed1, float speed2*/){
+  float speed1 = calculateCurrentSpeed()
+  wait(0.001)
+  float speed2 = calculateCurrentSpeed()
+  return speed2-speed1/0.001 //Acceleration 
+}
+
+float calculateDesiredSpeed(float deltaAlt){
+  // how fast should we be going? But need to account drag into this  
+  speed = sqrt(2(G*deltaAlt))
+  return speed
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  float currSpeed = calculateCurrentSpeed()
+  float currDeltaAlt = Altitude - calculateAltitude() 
+  float desSpeed = calculateDesiredSpeed(currDeltaAlt)
+  int airbrakeState = airbrakeState()
+  if(currSpeed > desSpeed) {
+    deployAirbrakes()
+  } 
+  else if(airbrakeState = 1) {
+    retractAirbrakes()
+  }
+}
