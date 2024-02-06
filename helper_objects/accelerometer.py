@@ -16,7 +16,7 @@ class accelerometer:
 
         self.iterations = 500
 
-        self.icm.accelerometer_data_rate_divisor = 0
+        self.icm.accelerometer_data_rate_divisor = 20
         self.icm.gyro_data_rate_divisor = 0
 
         self.accelRate = self.icm.accelerometer_data_rate
