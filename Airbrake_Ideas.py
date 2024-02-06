@@ -1,5 +1,5 @@
 import numpy as np
-import cyllogger
+from helper_objects import cyllogger
 import time
 import math
 from airbrake import airbrake
