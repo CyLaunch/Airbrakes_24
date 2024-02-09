@@ -7,6 +7,12 @@ from airbrake import airbrake
 #THIS IS IN IMPERIAL UNITS!!!!!
 ab = airbrake()
 accSpeed = 0.0
+
+#Loggers
+#ab_log = cyllogger("Airbrake")
+#alt_predict_log = cyllogger("Prediction_Alt")
+#vel_log = cyllogger("Velocity")
+#launch_log = cyllogger("Launch")
 class Calculations:
     def current_speed(self):
         #This reads in barometer and accelerometer and decides velocity
@@ -14,7 +20,7 @@ class Calculations:
         alt_s1 = ab.get_altitude()
         alt_s2 = ab.get_altitude()
         altSpeed = (alt_s2-alt_s1)/0.02
-        if altSpeed > 100: #This can change so it makes sense just if its outside of bounds
+        if altSpeed > 1000: #This can change so it makes sense just if its outside of bounds
             return altSpeed
         else:
             ab.retract_airbrakes()
@@ -29,7 +35,10 @@ class Calculations:
         A=0.0224 #Area without airbrakes (m^2)
         rho=0.069607176 #lbs/ft^3 at 2000ft 
         g=32.16789 #ft/s^2 
-        Xc=(m/(rho*Cd*A)*np.log10((m*g+0.5*rho*Cd*A*velocity^2)/(m*g)))+alt
+        print(velocity)
+        Xc=(m/(rho*Cd*A)*np.log10((m*g+0.5*rho*Cd*A*velocity**2)/(m*g)))+alt
+        #alt_predict_log.writeto(Xc)
+        #print(Xc)
         return Xc
 
 if __name__ == "__main__":
@@ -44,7 +53,7 @@ if __name__ == "__main__":
         time.sleep(0.25) 
 
     #Motor Burn
-    time.sleep(5)
+    time.sleep(1)
 
     #Apogee
     timeout = time.time() + 10 #Change this 6 to change time of airbrake logic
@@ -55,6 +64,7 @@ if __name__ == "__main__":
             ab.deploy_airbrakes()
         else: 
             ab.retract_airbrakes()
+            #print('Closing')
         timeout += time.time()
 
     ab.retract_airbrakes()
