@@ -53,7 +53,7 @@ if __name__ == "__main__":
         time.sleep(0.25) 
 
     #Motor Burn
-    time.sleep(1)
+    time.sleep(1.1)
 
     #Apogee
     timeout = time.time() + 10 #Change this 6 to change time of airbrake logic
