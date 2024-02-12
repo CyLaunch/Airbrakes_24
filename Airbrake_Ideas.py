@@ -23,17 +23,17 @@ class Calculations:
         #THIS NEEDS TO CHANGE BASED ON SENSOR TIMING
         alt_s1 = ab.get_altitude()
         alt_s2 = ab.get_altitude()
-        print("alt_s1, alt_s2 " + str(alt_s1) + " " + str(alt_s2))
+        #print("alt_s1, alt_s2 " + str(alt_s1) + " " + str(alt_s2))
         altSpeed = (alt_s2-alt_s1)/0.02
-        if altSpeed > 1000: #This can change so it makes sense just if its outside of bounds
-            return altSpeed
-        else:
+        if altSpeed > ALT_MAX_SPEED: #This can change so it makes sense just if its outside of bounds
             print("else taken")
             ab.retract_airbrakes()
             acc_s1 = ab.get_acceleration()
             acc_s2 = ab.get_acceleration()
             accSpeed += (acc_s2-acc_s1)*0.02
             return accSpeed
+        else:
+            return altSpeed
     
     def predicted_alt(alt,velocity): #Maybe read in density too?
         m=33.0693 #lbs 
@@ -41,15 +41,15 @@ class Calculations:
         A=0.0224 #Area without airbrakes (m^2) #TODO Change to FT^2
         rho=0.069607176 #lbs/ft^3 at 2000ft 
         g=32.16789 #ft/s^2 
-        print(velocity)
+        #print(velocity)
         Xc=(m/(rho*Cd*A)*np.log10((m*g+0.5*rho*Cd*A*velocity**2)/(m*g)))+alt
         #alt_predict_log.writeto(Xc)
-        #print(Xc)
+        print(Xc)
         return Xc
 
 if __name__ == "__main__":
     Calc = Calculations()
-    DesiredAltitude = 5000.0 #Altitude in Feet
+    DesiredAltitude = 1000.0 #Altitude in Feet
     currSpeed = 0.0
 
     #Launch Phase
@@ -61,7 +61,7 @@ if __name__ == "__main__":
 
     #Motor Burn
     time.sleep(1.1)
-
+    
     #Apogee
     timeout = time.time() + 10 #Change this 6 to change time of airbrake logic
     while timeout >= time.time(): #In total 11 seconds after launch
@@ -69,9 +69,11 @@ if __name__ == "__main__":
         total_alt = Calculations.predicted_alt(ab.get_altitude(),currSpeed) 
         if total_alt >= DesiredAltitude: #This is in meters! 
             ab.deploy_airbrakes()
+            #print(currSpeed)
+            print('OPEN')
         else: 
             ab.retract_airbrakes()
-            #print('Closing')
+            print('Closing')
         timeout += time.time()
 
     ab.retract_airbrakes()
