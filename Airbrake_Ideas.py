@@ -7,6 +7,7 @@ from airbrake import airbrake
 #THIS IS IN IMPERIAL UNITS!!!!!
 ab = airbrake()
 accSpeed = 0.0
+DESIRED_ALT = 5000
 
 #Loggers
 #ab_log = cyllogger("Airbrake")
@@ -36,14 +37,14 @@ class Calculations:
         rho=0.069607176 #lbs/ft^3 at 2000ft 
         g=32.16789 #ft/s^2 
         print(velocity)
-        Xc=(m/(rho*Cd*A)*np.log10((m*g+0.5*rho*Cd*A*velocity**2)/(m*g)))+alt
+        Xc=(m/(rho*Cd*A)*math.log((m*g+0.5*rho*Cd*A*velocity**2)/(m*g)))+alt
         #alt_predict_log.writeto(Xc)
         #print(Xc)
         return Xc
 
 if __name__ == "__main__":
     Calc = Calculations()
-    DesiredAltitude = 5000.0 #Altitude in Feet
+    DesiredAltitude = DESIRED_ALT #Altitude in Feet
     currSpeed = 0.0
 
     #Launch Phase
@@ -53,7 +54,7 @@ if __name__ == "__main__":
         time.sleep(0.25) 
 
     #Motor Burn
-    time.sleep(1.1)
+    time.sleep(5)
 
     #Apogee
     timeout = time.time() + 10 #Change this 6 to change time of airbrake logic
