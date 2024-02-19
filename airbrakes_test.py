@@ -9,7 +9,8 @@ if(choice == '1'):
         if(char == 'a'):
             print(ab.get_acceleration())
         elif(char == 'b'):
-            print(ab.get_altitude())
+            while True:
+                print(ab.get_altitude())
 
 elif(choice == '2'):
     while(char != 'q'):
