@@ -8,7 +8,7 @@ from helper_objects.cyllogger import cyllogger
 # LAUNCH PARAMS
 # ----------------------------------------------------------------------
 TRGT_ALT_FT = 5000.0 #TODO up to date?
-ALT_MAX_SPEED = 10.0 #TODO Change please, and what unit is this in?
+ALT_MAX_SPEED = 670 #TODO Change please, and what unit is this in?
 MOTOR_BURN_TIME_S = 3.0
 AB_ACTUATION_TIME_S = 10.0
 # ----------------------------------------------------------------------
@@ -48,10 +48,8 @@ def main():
         else: 
             ab.retract_airbrakes()
             main_log.writeTo("Airbrakes are retracted.")
-        # timeout += time.time() - This doesn't make sense as time.time() is total seconds since the epoch,
-        # Therefore adding this will make the loop last forever
-
     ab.retract_airbrakes()
+    main_log.writeTo("Final Time Occured, Retracting airbrakes and exiting loop")
 
 class Calculations:
     def current_speed():
@@ -61,15 +59,14 @@ class Calculations:
         altSpeed = (alt_s2-alt_s1)/0.02
         if altSpeed > ALT_MAX_SPEED: #This can change so it makes sense just if its outside of bounds
             ab.retract_airbrakes()
-	    #print("Acc used: Else Taken")
-            return 1
+            return 1.0
         else:
             return altSpeed
     
-    def predicted_alt(alt,velocity): #Maybe read in density too?
+    def predicted_alt(alt,velocity): 
         m=30.25 #lbs 
         Cd=0.61 #CHANGE for each rocket!! 
-        A= 0.2413 # ft^2 TODO Brenner check that this seems right
+        A= 0.2413 # ft^2 
         rho=0.062 #lbs/ft^3 at 2000ft 
         g=32.16789 #ft/s^2 
         Xc=(m/(rho*Cd*A)*math.log((m*g+0.5*rho*Cd*A*velocity**2)/(m*g)))+alt
