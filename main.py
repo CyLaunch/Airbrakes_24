@@ -7,8 +7,8 @@ from helper_objects.cyllogger import cyllogger
 
 # LAUNCH PARAMS
 # ----------------------------------------------------------------------
-TRGT_ALT_FT = 5000.0 #TODO up to date?
-ALT_MAX_SPEED = 670 #TODO Change please, and what unit is this in?
+TRGT_ALT_FT = 5000.0 
+ALT_MAX_SPEED = 670 
 MOTOR_BURN_TIME_S = 3.0
 AB_ACTUATION_TIME_S = 10.0
 # ----------------------------------------------------------------------
