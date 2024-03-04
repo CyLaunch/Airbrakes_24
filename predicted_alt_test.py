@@ -77,6 +77,7 @@ data = [
 # calcs = Calculations()
 pred_alt = 0
 
+#TODO we should pull in predicted alt from main.py
 def predicted_alt(alt,velocity): #Maybe read in density too?
         m=30.25 #lb
         Cd=0.55
@@ -89,6 +90,7 @@ def predicted_alt(alt,velocity): #Maybe read in density too?
 
 def test_calculations():
     # Runs each velocity/altitude combo
+    global pred_alt
     for alt, vel, in data:
         pred_alt = predicted_alt(alt*3.28, vel*3.28)
         #print("Velocity: {} Altitude: {} predicted Alt: {}".format(vel, alt, pred_alt))

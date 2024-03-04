@@ -20,7 +20,7 @@ launch_detection_magnitude = 30
 class airbrake:
     def __init__(self):
         self.logger = cyllogger("airbrakes")
-        self.loggerCSV = cylloggerCSV("airbrakes")
+        self.loggerCSV = cylloggerCSV("altitude")
         self.accelerometer = accelerometer()
         self.barometer = barometer()
         self.servo = servo(18) # Servo is on pin 18
@@ -34,7 +34,6 @@ class airbrake:
     def retract_airbrakes(self):
         self.servo.move(0)
 
-    #TODO Confirm the launch detection magnitude
     def detect_launch(self):
         avg = 0.0
         for i in range(2):
@@ -42,21 +41,21 @@ class airbrake:
         avg = avg / 3
 
         if(avg > launch_detection_magnitude):
+            self.logger.writeTo("Detected Magnitude: {} Returing TRUE".format(avg))
             return True
         else:
+            self.logger.writeTo("Detected Magnitude: {} Returing FALSE".format(avg))
             return False
 
     def get_accel_mag(self):
         return self.accelerometer.accel_magnitude()
 
+    # Returns the relative altitude in FT, subtracting the
+    # TARE value calculated at initialization
     def get_altitude(self):
-        print("AB tare value: " + str(self.airbrake_tare_value))
-        b = (self.barometer.get_altitude() - self.airbrake_tare_value)
-        self.loggerCSV.writeTo(b)
-        return b    
-
-    def get_acceleration(self):
-        return self.accelerometer.accel()
+        relative_alt = (self.barometer.get_altitude() - self.airbrake_tare_value)
+        self.loggerCSV.writeTo(relative_alt)
+        return relative_alt    
     
     def tare_barometer(self):
         sum = 0.0
