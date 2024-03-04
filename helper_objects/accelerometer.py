@@ -7,23 +7,13 @@
 import time
 import board
 import adafruit_icm20x
+import math
 
 class accelerometer:
 
     def __init__(self):
         self.i2c = board.I2C()  
         self.icm = adafruit_icm20x.ICM20649(self.i2c)
-
-        self.iterations = 500
-
-        self.icm.accelerometer_data_rate_divisor = 20
-        self.icm.gyro_data_rate_divisor = 0
-
-        self.accelRate = self.icm.accelerometer_data_rate
-        self.gyroRate = self.icm.gyro_data_rate
-        
-        self.gyroRange = self.icm.gyro_range
-        self.accelRange = self.icm.accelerometer_range
 
     def gyro(self):
         return self.icm.gyro
@@ -36,13 +26,8 @@ class accelerometer:
     # Accelerations in meters
     def accel_magnitude(self):
         data = self.accel()
-        cnt = 0
-        accel_sum = 0
-        for x in data:
-            cnt = cnt + 1
-            accel_sum = accel_sum + x
-
-        return (accel_sum / cnt)
+        # This gives me gravity at around 19 m/s wtf
+        return (math.sqrt(((data[0]**2) + (data[1]**2) + (data[2]**2)))) / 2
 
         
     

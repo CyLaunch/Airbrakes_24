@@ -20,7 +20,7 @@ class cyllogger:
     def writeTo(self, message):
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
-        self.logfile.write("[" + current_time + "] " + message + "\n")
+        self.logfile.write("[" + current_time + "] " + str(message) + "\n")
     
     def __del__(self):
         self.logfile.close()
