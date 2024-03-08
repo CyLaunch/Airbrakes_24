@@ -4,9 +4,10 @@
 # CyLaunch 2023-24
 #----------------------------------------------------
 import time
-import constants
 import board
 import adafruit_bmp3xx
+
+MT_TO_FT = 3.28084
 
 class barometer:
     def __init__(self):
@@ -17,4 +18,4 @@ class barometer:
 
     # Returns the altitude in feet
     def get_altitude(self):
-        return self.bmp.altitude * constants.MT_TO_FT
+        return self.bmp.altitude * MT_TO_FT

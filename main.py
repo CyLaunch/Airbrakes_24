@@ -5,10 +5,8 @@
 #----------------------------------------------------
 
 import numpy as np
-from helper_objects import cyllogger
 import time
 import math
-import helper_objects.constants as constants
 from airbrake import airbrake
 from helper_objects.cyllogger import cyllogger
 
