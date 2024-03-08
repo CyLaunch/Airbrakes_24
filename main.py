@@ -1,3 +1,4 @@
+
 #----------------------------------------------------
 # Main airbrake actuation loop
 # @Authors Bstickney & bdpope
@@ -17,6 +18,7 @@ TRGT_ALT_FT = 5000.0
 ALT_MAX_SPEED_FT_S = 700.0
 MOTOR_BURN_TIME_S = 3.0
 AB_ACTUATION_TIME_S = 10.0
+NS_TO_S = 0.0000001
 
 # Airbrake object
 ab = airbrake()
@@ -29,7 +31,7 @@ def main():
 
     #Launch Phase
     main_log.writeTo("Entering Detect launch Loop.")
-    while ab.detect_launch() == False:
+    while ab.detect_launch() == True:
         time.sleep(0.25) 
         main_log.writeTo("Launch Not Detected.")
     main_log.writeTo("Launch Detected! Exiting Loop.")
@@ -54,7 +56,8 @@ def main():
             else: 
                 ab.retract_airbrakes()
                 main_log.writeTo("Airbrakes are retracted.")
-        except:
+        except Exception as e:
+            main_log.writeTo(e.message)
             main_log.writeTo("Exception caught in AB Deployment loop, looping again")
             ab.retract_airbrakes()
 
@@ -74,7 +77,7 @@ class Calculations:
         alt_s2 = ab.get_altitude()
         after_time_ns = time.time_ns()
 
-        time_delta_s = (after_time_ns - before_time_ns) * constants.NS_TO_S
+        time_delta_s = (after_time_ns - before_time_ns) * NS_TO_S
 
         altSpeed = (alt_s2-alt_s1)/time_delta_s
 
