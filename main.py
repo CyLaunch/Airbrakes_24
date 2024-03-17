@@ -16,8 +16,8 @@ from helper_objects.cyllogger import cyllogger
 # ----------------------------------------------------------------------
 TRGT_ALT_FT = 5000.0 
 ALT_MAX_SPEED_FT_S = 700.0
-MOTOR_BURN_TIME_S = 3.0
-AB_ACTUATION_TIME_S = 10.0
+MOTOR_BURN_TIME_S = 4.0
+AB_ACTUATION_TIME_S = 9.0
 NS_TO_S = 0.0000001
 
 # Airbrake object
@@ -31,7 +31,7 @@ def main():
 
     #Launch Phase
     main_log.writeTo("Entering Detect launch Loop.")
-    while ab.detect_launch() == True:
+    while ab.detect_launch() == False:
         time.sleep(0.25) 
         main_log.writeTo("Launch Not Detected.")
     main_log.writeTo("Launch Detected! Exiting Loop.")
@@ -88,8 +88,8 @@ class Calculations:
             return altSpeed
     
     def predicted_alt(alt,velocity): 
-        m=30.25 #lbs 
-        Cd=0.61 #CHANGE for each rocket!! 
+        m=26.75 #lbs 
+        Cd=0.53 #CHANGE for each rocket!! 
         A= 0.2413 # ft^2 
         rho=0.062 #lbs/ft^3 at 2000ft 
         g=32.16789 #ft/s^2 
