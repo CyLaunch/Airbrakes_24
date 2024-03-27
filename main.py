@@ -25,6 +25,7 @@ ab = airbrake()
 
 # Logger
 main_log = cyllogger("main")
+speed_log = cyllogger("current_speed")
 
 def main():
     currSpeed = 0.0
@@ -47,6 +48,7 @@ def main():
     while timeout >= time.time(): # In total 13 seconds after launch
         try:
             currSpeed = Calculations.current_speed()
+            speed_log.writeTo("Current Speed: {}".format(currSpeed))
             total_alt = Calculations.predicted_alt(ab.get_altitude(),currSpeed)
             main_log.writeTo("Predicted Alt: {}ft.".format(total_alt))
             if total_alt >= TRGT_ALT_FT:
@@ -82,7 +84,6 @@ class Calculations:
         altSpeed = (alt_s2-alt_s1)/time_delta_s
 
         if altSpeed > ALT_MAX_SPEED_FT_S: #This can change so it makes sense just if its outside of bounds
-            ab.retract_airbrakes() #TODO we should not be retracting here, it should be in main Brenner take a look
             return 1.0
         else:
             return altSpeed
@@ -95,21 +96,6 @@ class Calculations:
         g=32.16789 #ft/s^2 
         Xc=(m/(rho*Cd*A)*math.log((m*g+0.5*rho*Cd*A*velocity**2)/(m*g)))+alt
         return Xc
-
-    def speed():
-        alt_s1a = ab.get_altitude()
-        alt_s1b = ab.get_altitude()
-        alt_s1 = (alt_s1a + alt_s1b)/2
-        before_time_ns = time.time_ns()
-
-        alt_s2a = ab.get_altitude()
-        alt_s2b = ab.get_altitude()
-        alt_s2 = (alt_s2a + alt_s2b)/2
-        after_time_ns = time.time_ns()
-
-        time_delta_s = (after_time_ns - before_time_ns) * NS_TO_S
-        altSpeed = (alt_s2-alt_s1)/time_delta_s
-        return altSpeed
 
 if __name__ == "__main__":
     main()

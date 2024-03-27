@@ -17,8 +17,6 @@ class cyllogger:
         except:
             os.mkdir("/home/cylaunch/logs/")
             self.fd = os.open(self.filePath, os.O_CREAT | os.O_RDWR | os.O_NONBLOCK)
-
-        print(self.fd)
     
     def writeTo(self, message):
         now = datetime.now()
