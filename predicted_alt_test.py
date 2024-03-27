@@ -93,7 +93,7 @@ def predicted_alt(alt,velocity): #Maybe read in density too?
             vel_sign = -1
         else: 
             vel_sign = 1
-        Xc=vel_sign(m/(rho*Cd*A)*math.log((m*g+0.5*rho*Cd*A*velocity**2)/(m*g)))+alt
+        Xc=vel_sign*(m/(rho*Cd*A)*math.log((m*g+0.5*rho*Cd*A*velocity**2)/(m*g)))+alt
         print(Xc)
         return Xc
 
