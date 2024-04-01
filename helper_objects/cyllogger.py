@@ -15,13 +15,13 @@ class cyllogger:
         try:
             self.fd = os.open(self.filePath, os.O_CREAT | os.O_RDWR | os.O_NONBLOCK)
         except:
-            os.mkdir("/home/cylaunch/logs/")
+            os.mkdir(LOGS_DIR)
             self.fd = os.open(self.filePath, os.O_CREAT | os.O_RDWR | os.O_NONBLOCK)
     
     def writeTo(self, message):
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
-        os.write( self.fd,  str.encode("[" + current_time + "] " + str(message) + "\n"))
-    
+        os.write(self.fd,  str.encode("[" + current_time + "] " + str(message) + "\n"))
+
     def __del__(self):
         os.close(self.fd)

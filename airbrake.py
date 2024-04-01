@@ -41,10 +41,10 @@ class airbrake:
         avg = avg / 3
 
         if(avg > launch_detection_magnitude):
-            self.logger.writeTo("Detected Magnitude: {} Returing TRUE".format(avg))
+            self.logger.writeTo("Detected Magnitude: {} Returning TRUE".format(avg))
             return True
         else:
-            self.logger.writeTo("Detected Magnitude: {} Returing FALSE".format(avg))
+            self.logger.writeTo("Detected Magnitude: {} Returning FALSE".format(avg))
             return False
 
     def get_accel_mag(self):
@@ -54,7 +54,7 @@ class airbrake:
     # TARE value calculated at initialization
     def get_altitude(self):
         relative_alt = (self.barometer.get_altitude() - self.airbrake_tare_value)
-        self.loggerCSV.writeTo(relative_alt)
+        self.loggerCSV.writeToCSV(relative_alt) ###
         return relative_alt    
     
     def tare_barometer(self):
@@ -64,5 +64,4 @@ class airbrake:
         avg = sum / 5.0
         print("Barometer tare set to {}".format(avg))
         self.airbrake_tare_value = avg
-        self.logger.writeTo("Barometer zero value set to {}".format(self.airbrake_tare_value))
-        
+        self.logger.writeTo("Barometer zero value set to {}".format(self.airbrake_tare_value)) 
