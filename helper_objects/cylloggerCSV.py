@@ -12,27 +12,23 @@ import os
 LOGS_DIR = "/home/cylaunch/logs/"
 class cylloggerCSV:
     def __init__(self, name):
-        self.filePath = LOGS_DIR + name + datetime.now().strftime("--%Y-%m-%d--%H-%M-%S") + ".csv", "w"
+        self.filePath = LOGS_DIR + name + datetime.now().strftime("--%Y-%m-%d--%H-%M-%S") + ".csv"
         try:    
-            self.logfile = os.open(self.filePath | os.O_NONBLOCK) 
-            #self.writer = csv.writer(self.logfile)  
+            self.logfile = os.open(self.filePath, os.O_CREAT | os.O_RDWR | os.O_NONBLOCK) 
         except:
             os.mkdir(LOGS_DIR)
-            self.logfile = os.open(LOGS_DIR + name + datetime.now().strftime("--%Y-%m-%d--%H-%M-%S") + ".csv", "w")
+            self.logfile = os.open(self.filePath, os.O_CREAT | os.O_RDWR | os.O_NONBLOCK)
     
-    def writeTo(self, message): 
+    # def writeTo(self, message): 
+    #     now = datetime.now()
+    #     current_time = now.strftime("%H:%M:%S")
+    #     arr = [current_time, message]
+    #     self.writer.writerow(arr)
+    
+    def writeToCSV(self, message):
         now = datetime.now()
-        current_time = now.strftime("%H:%M:%S")
-        arr = [current_time, message]
-        self.writer.writerow(arr)
-    
-    def writeToCSV(self, message)
-        now = datetime,now()
-        current_time = now.strftime("%H:%M:%S")
-        arr = [current_time, message]
-        for i in message:
-            string = string + ", " + i
-            os.write(self.logfile,  str.encode("[" + current_time + "] " + str(string) + "\n"))
+        current_time = now.strftime("%H:%M:%S.%f")[:-3]
+        os.write(self.logfile,  str.encode("[" + current_time + "]" + ", " + str(message) + "\n"))
     
     def __del__(self):
         self.logfile.close()
