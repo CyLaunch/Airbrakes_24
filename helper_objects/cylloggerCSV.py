@@ -1,6 +1,6 @@
 #----------------------------------------------------
 # CyLogger object, simplifies timestamping and 
-# writing to logs. Creates a timestamped logfile .csv excel file with
+# writing to logs. Creates a timestamped logfile .csv file with
 # timestamped entries. Closes the logger upon removal.
 # @Authors Marcus Miller
 # CyLaunch 2023-24
@@ -8,7 +8,7 @@
 
 from datetime import datetime
 import os
-#import csv
+
 LOGS_DIR = "/home/cylaunch/logs/"
 class cylloggerCSV:
     def __init__(self, name):
@@ -18,12 +18,6 @@ class cylloggerCSV:
         except:
             os.mkdir(LOGS_DIR)
             self.logfile = os.open(self.filePath, os.O_CREAT | os.O_RDWR | os.O_NONBLOCK)
-    
-    # def writeTo(self, message): 
-    #     now = datetime.now()
-    #     current_time = now.strftime("%H:%M:%S")
-    #     arr = [current_time, message]
-    #     self.writer.writerow(arr)
     
     def writeToCSV(self, message):
         now = datetime.now()
