@@ -83,7 +83,7 @@ class Calculations:
 
         altSpeed = (alt_s2-alt_s1)/time_delta_s
 
-        if altSpeed > ALT_MAX_SPEED_FT_S: #This can change so it makes sense just if its outside of bounds
+        if altSpeed > ALT_MAX_SPEED_FT_S or altSpeed <= 0 : #This can change so it makes sense just if its outside of bounds
             return 1.0
         else:
             return altSpeed
