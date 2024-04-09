@@ -14,7 +14,7 @@ class barometer:
         i2c = board.I2C()
         self.bmp = adafruit_bmp3xx.BMP3XX_I2C(i2c)
         self.bmp.pressure_oversampling = 8
-        self.bmp.temperature_oversampling = 2
+        self.bmp.temperature_oversampling = 32
 
     # Returns the altitude in feet
     def get_altitude(self):
