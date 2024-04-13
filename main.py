@@ -91,7 +91,7 @@ class Calculations:
             return altSpeed
     
     def predicted_alt(alt,velocity): 
-        m=33.25 #lbs 
+        m=29.25 #lbs 
         Cd=0.53 #CHANGE for each rocket!! 
         A= 0.2413 # ft^2 
         rho=0.065 #lbs/ft^3 at 2000ft 
