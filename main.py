@@ -17,7 +17,7 @@ from helper_objects.cyllogger import cyllogger
 TRGT_ALT_FT = 5000.0 
 ALT_MAX_SPEED_FT_S = 700.0
 MOTOR_BURN_TIME_S = 4.0
-AB_ACTUATION_TIME_S = 6.0
+AB_ACTUATION_TIME_S = 7.0
 NS_TO_S = 0.000000001
 
 # Airbrake object
