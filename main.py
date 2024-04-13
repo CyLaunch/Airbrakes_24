@@ -17,7 +17,7 @@ from helper_objects.cyllogger import cyllogger
 TRGT_ALT_FT = 5000.0 
 ALT_MAX_SPEED_FT_S = 700.0
 MOTOR_BURN_TIME_S = 4.0
-AB_ACTUATION_TIME_S = 9.0
+AB_ACTUATION_TIME_S = 6.0
 NS_TO_S = 0.000000001
 
 # Airbrake object
@@ -47,17 +47,18 @@ def main():
     timeout = time.time() + AB_ACTUATION_TIME_S
     while timeout >= time.time(): # In total 13 seconds after launch
         try:
-            currSpeed = Calculations.current_speed()
-            speed_log.writeTo("Current Speed: {}".format(currSpeed))
-            total_alt = Calculations.predicted_alt(ab.get_altitude(),currSpeed)
-            main_log.writeTo("Predicted Alt: {}ft.".format(total_alt))
-            if total_alt >= TRGT_ALT_FT:
-                main_log.writeTo("Target altitude exceeded! Deploying airbrakes.")
-                ab.deploy_airbrakes()
-                main_log.writeTo("Airbrakes deployed.")
-            else: 
-                ab.retract_airbrakes()
-                main_log.writeTo("Airbrakes are retracted.")
+            # currSpeed = Calculations.current_speed()
+            # speed_log.writeTo("Current Speed: {}".format(currSpeed))
+            # # total_alt = Calculations.predicted_alt(ab.get_altitude(),currSpeed)
+            # main_log.writeTo("Predicted Alt: {}ft.".format(total_alt))
+            # if total_alt >= TRGT_ALT_FT:
+            #     main_log.writeTo("Target altitude exceeded! Deploying airbrakes.")
+            #     ab.deploy_airbrakes()
+            #     main_log.writeTo("Airbrakes deployed.")
+            # else: 
+            #     ab.retract_airbrakes()
+            #     main_log.writeTo("Airbrakes are retracted.")
+            ab.deploy_airbrakes()
         except Exception as e:
             main_log.writeTo(e.message)
             main_log.writeTo("Exception caught in AB Deployment loop, looping again")
@@ -72,23 +73,23 @@ def main():
     main_log.writeTo("Sleep complete, woohoo! I survived launch!")
 
 class Calculations:
-    def current_speed():
-        alt_s1 = ab.get_altitude()
-        before_time_ns = time.time_ns()
+    # def current_speed():
+    #     alt_s1 = ab.get_altitude()
+    #     before_time_ns = time.time_ns()
 
-        alt_s2 = ab.get_altitude()
-        after_time_ns = time.time_ns()
+    #     alt_s2 = ab.get_altitude()
+    #     after_time_ns = time.time_ns()
 
-        time_delta_s = (after_time_ns - before_time_ns) * NS_TO_S
+    #     time_delta_s = (after_time_ns - before_time_ns) * NS_TO_S
 
-        altSpeed = (alt_s2-alt_s1)/time_delta_s
+    #     altSpeed = (alt_s2-alt_s1)/time_delta_s
 
-        if altSpeed > ALT_MAX_SPEED_FT_S:
-            return 1.0
-        elif altSpeed <= 0:
-            return 2.0
-        else:
-            return altSpeed
+    #     if altSpeed > ALT_MAX_SPEED_FT_S:
+    #         return 1.0
+    #     elif altSpeed <= 0:
+    #         return 2.0
+    #     else:
+    #         return altSpeed
     
     def predicted_alt(alt,velocity): 
         m=29.25 #lbs 
