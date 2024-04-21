@@ -11,6 +11,7 @@ A Raspberry Pi Zero was used along with a barometer and servo motor from adafrui
 
 # Acknowledgements
 Lead: Bryan P
+
 Members: Camden F, Marcus M, Brenner S
 
 With lots of CFD help by: Ethan S and Marcus M
