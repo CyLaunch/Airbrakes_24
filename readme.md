@@ -9,7 +9,7 @@ The goal of the 2024 airbrake subsystem was to reduce the apogee to more accurat
 ## Hardware used
 * Raspberry Pi Zero 2W
 * Adafruit BMP 390 Barometer
-* Adafruit ICM-ICM-20948
+* Adafruit ICM-20948
 
 # Acknowledgements
 CyLaunch Systems Team:
