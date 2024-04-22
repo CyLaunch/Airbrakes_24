@@ -1,3 +1,11 @@
+#----------------------------------------------------
+# Airbrake test script allowing manual control of 
+# sensors and the servo
+# 
+# @Author bdpope
+# CyLaunch 2023-24
+#----------------------------------------------------
+
 from airbrake import airbrake
 
 ab = airbrake()

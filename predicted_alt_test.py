@@ -1,4 +1,9 @@
-import numpy as np
+#----------------------------------------------------
+# Tests the speed software against simulink flight
+# 
+# @Author bstickney
+# CyLaunch 2023-24
+#----------------------------------------------------
 import math
 import time
 from airbrake import airbrake

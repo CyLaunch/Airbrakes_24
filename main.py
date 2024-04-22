@@ -1,11 +1,10 @@
 
 #----------------------------------------------------
-# Main airbrake actuation loop
+# Airbrake main logic loop
 # @Authors Bstickney & bdpope
 # CyLaunch 2023-24
 #----------------------------------------------------
 
-import numpy as np
 import time
 import math
 from airbrake import airbrake
