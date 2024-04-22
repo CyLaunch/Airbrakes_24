@@ -16,4 +16,4 @@ CyLaunch Systems Team:
 
 Lead: Bryan P
 
-Members: Camden F, Marcus M, Brenner S, Ethan S and Marcus M
+Members: Camden F, Marcus M, Brenner S, and Ethan S
