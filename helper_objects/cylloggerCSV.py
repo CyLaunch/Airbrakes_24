@@ -25,4 +25,4 @@ class cylloggerCSV:
         os.write(self.logfile,  str.encode("[" + current_time + "]" + ", " + str(message) + "\n"))
     
     def __del__(self):
-        self.logfile.close()
+        os.close(self.logfile)

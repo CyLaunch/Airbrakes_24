@@ -83,16 +83,18 @@ class Calculations:
 
         altSpeed = (alt_s2-alt_s1)/time_delta_s
 
-        if altSpeed > ALT_MAX_SPEED_FT_S: #This can change so it makes sense just if its outside of bounds
+        if altSpeed > ALT_MAX_SPEED_FT_S:
             return 1.0
+        elif altSpeed <= 0:
+            return 2.0
         else:
             return altSpeed
     
     def predicted_alt(alt,velocity): 
-        m=26.75 #lbs 
+        m=29.25 #lbs 
         Cd=0.53 #CHANGE for each rocket!! 
         A= 0.2413 # ft^2 
-        rho=0.062 #lbs/ft^3 at 2000ft 
+        rho=0.065 #lbs/ft^3 at 2000ft 
         g=32.16789 #ft/s^2 
         Xc=(m/(rho*Cd*A)*math.log((m*g+0.5*rho*Cd*A*velocity**2)/(m*g)))+alt
         return Xc
